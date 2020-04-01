@@ -21,7 +21,7 @@ public:
     void paint(QPainter *painter);
 
 private slots:
-    void updateSource();
+    void transform();
 
 signals:
     void sourceChanged();

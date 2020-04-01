@@ -19,7 +19,7 @@ void LinearFilter::setSource(Mat *source)
 {
     source_ = source;
     setImage(source->image());
-    QObject::connect(source_,SIGNAL(baseImageChanged()),this,SLOT(updateSource()));
+    QObject::connect(source_,SIGNAL(baseImageChanged()),this,SLOT(transform()));
 }
 
 
@@ -31,9 +31,13 @@ void LinearFilter::paint(QPainter *painter)
 }
 
 
-void LinearFilter::updateSource()
+void LinearFilter::transform()
 {
-    setImage(source_->image());
+    cv::Mat input = source_->matrix();
+    cv::Mat output;
+    cv::blur( input,output,cv::Size(15,15));
+
+    setImage(output);
     update();
 }
 

@@ -62,13 +62,13 @@ void ImageBase::setImage(const cv::Mat &mat)
    setImage(img);
 }
 
-//cv::Mat ImageBase::matrix() const
-//{
-//    return cv::Mat(
-//        image_.height(),
-//        image_.width(),
-//        CV_8UC3,
-//        const_cast<unsigned char*>(image_.bits()),
-//        image_.bytesPerLine()
-//    );
-//}
+cv::Mat ImageBase::matrix() const
+{
+    return cv::Mat(
+        image_.height(),
+        image_.width(),
+        CV_8UC3,
+        const_cast<unsigned char*>(image_.bits()),
+        image_.bytesPerLine()
+    );
+}

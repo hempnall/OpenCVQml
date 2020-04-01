@@ -26,6 +26,7 @@ class ImageBase
 public:
     ImageBase();
     virtual void paint(QPainter *painter)=0;
+    cv::Mat matrix() const;
 
     QString filename() const;
     void setFilename(const QString &filename);
@@ -33,8 +34,6 @@ public:
     QImage image() const;
     void setImage(const QImage &image);
     void setImage(const cv::Mat &mat);
-   // cv::Mat matrix() const;
-
 
 signals:
     void baseImageChanged();
