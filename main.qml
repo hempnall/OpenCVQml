@@ -12,13 +12,20 @@ Window {
 
     RowLayout {
         anchors.fill: parent
-        Button {
-            text: "Boo"
-            onClicked: {
-                im1.filename = "/Users/jameshook/data/cakes.jpg";
+        ColumnLayout {
+            Button {
+                text: "Boo"
+                onClicked: {
+                    im1.filename = "/Users/jameshook/data/cakes.jpg";
+                }
+            }
+            Slider {
+                id: slider1
+                from: 1
+                to: 50
+                value: 1
             }
         }
-
         Mat {
             id: im1
             Layout.fillHeight: true
@@ -31,12 +38,16 @@ Window {
             Layout.fillHeight: true
             Layout.fillWidth: true
             filter: Blur {
-                width: 15
-                height: 15
+                width: slider1.value
+                height: slider1.value
             }
-            onImageChanged: console.log("image changed <<<<");
         }
-
+        Mat {
+            id: lin2
+            image: lin.image
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+        }
     }
 
 

@@ -40,6 +40,9 @@ public:
     void setImage(const QImage &image);
     void setImage(const cv::Mat &mat);
 
+public slots:
+    void invalidateImage();
+
 signals:
     void baseImageChanged();
     void imageChanged();

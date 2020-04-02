@@ -11,6 +11,7 @@
 class Blur : public LinearFilter
 {
     Q_OBJECT
+    Q_PROPERTY(QRect size READ size WRITE setSize NOTIFY sizeChanged)
     Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
     Q_PROPERTY(int height READ height WRITE setHeight NOTIFY heightChanged)
 
@@ -24,13 +25,19 @@ public:
     int height() const;
     void setHeight(const int &height);
 
-public slots:
+    QRect size() const;
+    void setSize(const QRect &size);
+
+signals:
     void heightChanged();
     void widthChanged();
+    void sizeChanged();
+
 
 private:
     int width_;
     int height_;
+    QRect size_;
 };
 
 #endif // BLUR_H

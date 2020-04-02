@@ -14,7 +14,9 @@ int Blur::width() const
 
 void Blur::setWidth(const int &width)
 {
-    width_ = width;
+    QRect newRect = size_;
+    newRect.setWidth( width );
+    setSize(newRect);
 }
 
 int Blur::height() const
@@ -24,24 +26,34 @@ int Blur::height() const
 
 void Blur::setHeight(const int &height)
 {
-    height_ = height;
+    QRect newRect = size_;
+    newRect.setHeight( height );
+    setSize(newRect);
 }
 
-void Blur::heightChanged()
+QRect Blur::size() const
 {
-
+    return size_;
 }
 
-void Blur::widthChanged()
+void Blur::setSize(const QRect &size)
 {
-
+    if (! (size == size_)) {
+        size_ = size;
+        emit redraw();
+    }
 }
+
+
 
 QImage Blur::transform(const QImage &input)
 {
+    if (size_.width() == 0 || size_.height() == 0) {
+        return input;
+    }
     cv::Mat in = matFromQimage(input);
     cv::Mat out;
-    cv::blur( in,out,cv::Size(width_,height_));
+    cv::blur( in,out,cv::Size(size_.width(),size_.width()));
     return qimageFromMat(out);
 }
 

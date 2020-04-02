@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Blur_t {
-    QByteArrayData data[6];
-    char stringdata0[46];
+    QByteArrayData data[8];
+    char stringdata0[63];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,12 +35,14 @@ QT_MOC_LITERAL(0, 0, 4), // "Blur"
 QT_MOC_LITERAL(1, 5, 13), // "heightChanged"
 QT_MOC_LITERAL(2, 19, 0), // ""
 QT_MOC_LITERAL(3, 20, 12), // "widthChanged"
-QT_MOC_LITERAL(4, 33, 5), // "width"
-QT_MOC_LITERAL(5, 39, 6) // "height"
+QT_MOC_LITERAL(4, 33, 11), // "sizeChanged"
+QT_MOC_LITERAL(5, 45, 4), // "size"
+QT_MOC_LITERAL(6, 50, 5), // "width"
+QT_MOC_LITERAL(7, 56, 6) // "height"
 
     },
-    "Blur\0heightChanged\0\0widthChanged\0width\0"
-    "height"
+    "Blur\0heightChanged\0\0widthChanged\0"
+    "sizeChanged\0size\0width\0height"
 };
 #undef QT_MOC_LITERAL
 
@@ -50,28 +52,32 @@ static const uint qt_meta_data_Blur[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
-       2,   26, // properties
+       3,   14, // methods
+       3,   32, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       3,       // signalCount
 
- // slots: name, argc, parameters, tag, flags
-       1,    0,   24,    2, 0x0a /* Public */,
-       3,    0,   25,    2, 0x0a /* Public */,
+ // signals: name, argc, parameters, tag, flags
+       1,    0,   29,    2, 0x06 /* Public */,
+       3,    0,   30,    2, 0x06 /* Public */,
+       4,    0,   31,    2, 0x06 /* Public */,
 
- // slots: parameters
+ // signals: parameters
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
  // properties: name, type, flags
-       4, QMetaType::Int, 0x00495103,
-       5, QMetaType::Int, 0x00495103,
+       5, QMetaType::QRect, 0x00495103,
+       6, QMetaType::Int, 0x00495103,
+       7, QMetaType::Int, 0x00495103,
 
  // properties: notify_signal_id
-    1879048195,
-    1879048193,
+       2,
+       1,
+       0,
 
        0        // eod
 };
@@ -84,7 +90,31 @@ void Blur::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         switch (_id) {
         case 0: _t->heightChanged(); break;
         case 1: _t->widthChanged(); break;
+        case 2: _t->sizeChanged(); break;
         default: ;
+        }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        {
+            using _t = void (Blur::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Blur::heightChanged)) {
+                *result = 0;
+                return;
+            }
+        }
+        {
+            using _t = void (Blur::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Blur::widthChanged)) {
+                *result = 1;
+                return;
+            }
+        }
+        {
+            using _t = void (Blur::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Blur::sizeChanged)) {
+                *result = 2;
+                return;
+            }
         }
     }
 #ifndef QT_NO_PROPERTIES
@@ -93,8 +123,9 @@ void Blur::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         Q_UNUSED(_t)
         void *_v = _a[0];
         switch (_id) {
-        case 0: *reinterpret_cast< int*>(_v) = _t->width(); break;
-        case 1: *reinterpret_cast< int*>(_v) = _t->height(); break;
+        case 0: *reinterpret_cast< QRect*>(_v) = _t->size(); break;
+        case 1: *reinterpret_cast< int*>(_v) = _t->width(); break;
+        case 2: *reinterpret_cast< int*>(_v) = _t->height(); break;
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
@@ -102,8 +133,9 @@ void Blur::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         Q_UNUSED(_t)
         void *_v = _a[0];
         switch (_id) {
-        case 0: _t->setWidth(*reinterpret_cast< int*>(_v)); break;
-        case 1: _t->setHeight(*reinterpret_cast< int*>(_v)); break;
+        case 0: _t->setSize(*reinterpret_cast< QRect*>(_v)); break;
+        case 1: _t->setWidth(*reinterpret_cast< int*>(_v)); break;
+        case 2: _t->setHeight(*reinterpret_cast< int*>(_v)); break;
         default: break;
         }
     } else if (_c == QMetaObject::ResetProperty) {
@@ -141,39 +173,50 @@ int Blur::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 3)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 2;
+        _id -= 3;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 2;
+        _id -= 3;
     }
 #endif // QT_NO_PROPERTIES
     return _id;
 }
-// If you get a compile error in this function it can be because either
-//     a) You are using a NOTIFY signal that does not exist. Fix it.
-//     b) You are using a NOTIFY signal that does exist (in a parent class) but has a non-empty parameter list. This is a moc limitation.
-Q_DECL_UNUSED static void checkNotifySignalValidity_Blur(Blur *t) {
-    t->widthChanged();
-    t->heightChanged();
+
+// SIGNAL 0
+void Blur::heightChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
+}
+
+// SIGNAL 1
+void Blur::widthChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
+}
+
+// SIGNAL 2
+void Blur::sizeChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

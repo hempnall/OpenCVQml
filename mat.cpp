@@ -10,7 +10,7 @@ Mat::Mat()
 void Mat::paint(QPainter *painter)
 {
     QRectF rect = boundingRect();
-    painter->drawImage(rect,image());
+    painter->drawImage(rect, image());
 }
 
 LinearFilter *Mat::filter() const
@@ -20,22 +20,25 @@ LinearFilter *Mat::filter() const
 
 void Mat::setFilter(LinearFilter *filter)
 {
-    filter_ = filter;
+    if (! (filter == nullptr)) {
+       QObject::connect(filter,SIGNAL(redraw()),this,SLOT(invalidateImage()));
+       filter_ = filter;
+    }
+
 }
 
 QImage Mat::image() const
 {
-    return image_;
+    if (filter_ == nullptr)    {
+        return image_;
+    } else {
+        return filter_->transform(image_);
+    }
 }
 
 void Mat::setImage(const QImage &image)
 {
-    if (filter_ == nullptr) {
-        image_ = image;
-    } else {
-        image_ = filter_->transform(image);
-    }
-    qDebug() << "image changed";
+    image_ = image;
     update();
     emit imageChanged();
 }
@@ -49,9 +52,7 @@ QString Mat::filename() const
 
 void Mat::setFilename(const QString &filename)
 {
-    qDebug() << filename;
     if ( filename != filename_ )  {
-        qDebug() << "filename";
         filename_ = filename;
         std::string str = filename_.toStdString();
         const char* p = str.c_str();
@@ -84,6 +85,12 @@ void Mat::setImage(const cv::Mat &mat)
      ).copy();
    }
    setImage(img);
+}
+
+void Mat::invalidateImage()
+{
+    update();
+    emit imageChanged();
 }
 
 cv::Mat Mat::matrix() const
