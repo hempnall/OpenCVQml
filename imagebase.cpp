@@ -21,7 +21,6 @@ void ImageBase::setFilename(const QString &filename)
         const char* p = str.c_str();
         mat_ = cv::imread( p );
         setImage(mat_);
-        update();
     }
 }
 
@@ -33,8 +32,6 @@ QImage ImageBase::image() const
 void ImageBase::setImage(const QImage &image)
 {
     image_ = image;
-    emit baseImageChanged();
-    update();
 }
 
 void ImageBase::setImage(const cv::Mat &mat)

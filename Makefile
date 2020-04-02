@@ -52,19 +52,19 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = imagebase.cpp \
+SOURCES       = blur.cpp \
 		linearfilter.cpp \
 		main.cpp \
 		mat.cpp qrc_qml.cpp \
-		moc_imagebase.cpp \
+		moc_blur.cpp \
 		moc_linearfilter.cpp \
 		moc_mat.cpp
-OBJECTS       = imagebase.o \
+OBJECTS       = blur.o \
 		linearfilter.o \
 		main.o \
 		mat.o \
 		qrc_qml.o \
-		moc_imagebase.o \
+		moc_blur.o \
 		moc_linearfilter.o \
 		moc_mat.o
 DIST          = README.md \
@@ -248,9 +248,9 @@ DIST          = README.md \
 		../../Qt/5.12.3/clang_64/mkspecs/features/exceptions.prf \
 		../../Qt/5.12.3/clang_64/mkspecs/features/yacc.prf \
 		../../Qt/5.12.3/clang_64/mkspecs/features/lex.prf \
-		opencv.pro imagebase.h \
+		opencv.pro blur.h \
 		linearfilter.h \
-		mat.h imagebase.cpp \
+		mat.h blur.cpp \
 		linearfilter.cpp \
 		main.cpp \
 		mat.cpp
@@ -682,8 +682,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../Qt/5.12.3/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents imagebase.h linearfilter.h mat.h $(DISTDIR)/
-	$(COPY_FILE) --parents imagebase.cpp linearfilter.cpp main.cpp mat.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents blur.h linearfilter.h mat.h $(DISTDIR)/
+	$(COPY_FILE) --parents blur.cpp linearfilter.cpp main.cpp mat.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -724,17 +724,13 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../Qt/5.12.3/clang_64/mkspecs/features/data/dummy.cpp
 	/Library/Developer/CommandLineTools/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.12 -Wall -W -dM -E -o moc_predefs.h ../../Qt/5.12.3/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_imagebase.cpp moc_linearfilter.cpp moc_mat.cpp
+compiler_moc_header_make_all: moc_blur.cpp moc_linearfilter.cpp moc_mat.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_imagebase.cpp moc_linearfilter.cpp moc_mat.cpp
-moc_imagebase.cpp: imagebase.h \
-		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickPaintedItem \
-		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickpainteditem.h \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QPainter \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qpainter.h \
-		/usr/local/include/opencv4/opencv2/imgcodecs.hpp \
+	-$(DEL_FILE) moc_blur.cpp moc_linearfilter.cpp moc_mat.cpp
+moc_blur.cpp: blur.h \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
+		/usr/local/include/opencv4/opencv2/imgproc.hpp \
 		/usr/local/include/opencv4/opencv2/core.hpp \
 		/usr/local/include/opencv4/opencv2/core/cvdef.h \
 		/usr/local/include/opencv4/opencv2/core/hal/interface.h \
@@ -762,26 +758,22 @@ moc_imagebase.cpp: imagebase.h \
 		/usr/local/include/opencv4/opencv2/core/utility.hpp \
 		/usr/local/include/opencv4/opencv2/core/optim.hpp \
 		/usr/local/include/opencv4/opencv2/core/ovx.hpp \
+		/usr/local/include/opencv4/opencv2/imgcodecs.hpp \
+		/usr/local/include/opencv4/opencv2/highgui.hpp \
+		/usr/local/include/opencv4/opencv2/videoio.hpp \
+		linearfilter.h \
 		/usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp \
-		/usr/local/include/opencv4/opencv2/imgproc.hpp \
-		/usr/local/include/opencv4/opencv2/imgproc/types_c.h \
-		/usr/local/include/opencv4/opencv2/core/core_c.h \
-		/usr/local/include/opencv4/opencv2/core/types_c.h \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h \
 		moc_predefs.h \
 		../../Qt/5.12.3/clang_64/bin/moc
-	/Users/jameshook/Qt/5.12.3/clang_64/bin/moc $(DEFINES) --include /Users/jameshook/opencv/OpenCVQml/moc_predefs.h -I/Users/jameshook/Qt/5.12.3/clang_64/mkspecs/macx-clang -I/Users/jameshook/opencv/OpenCVQml -I/usr/local/include/opencv4 -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtGui.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQml.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtNetwork.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtCore.framework/Headers -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/jameshook/Qt/5.12.3/clang_64/lib imagebase.h -o moc_imagebase.cpp
+	/Users/jameshook/Qt/5.12.3/clang_64/bin/moc $(DEFINES) --include /Users/jameshook/opencv/OpenCVQml/moc_predefs.h -I/Users/jameshook/Qt/5.12.3/clang_64/mkspecs/macx-clang -I/Users/jameshook/opencv/OpenCVQml -I/usr/local/include/opencv4 -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtGui.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQml.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtNetwork.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtCore.framework/Headers -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/jameshook/Qt/5.12.3/clang_64/lib blur.h -o moc_blur.cpp
 
 moc_linearfilter.cpp: linearfilter.h \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
-		mat.h \
-		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickPaintedItem \
-		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickpainteditem.h \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QPainter \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qpainter.h \
-		/usr/local/include/opencv4/opencv2/imgcodecs.hpp \
+		/usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv4/opencv2/imgproc.hpp \
 		/usr/local/include/opencv4/opencv2/core.hpp \
 		/usr/local/include/opencv4/opencv2/core/cvdef.h \
 		/usr/local/include/opencv4/opencv2/core/hal/interface.h \
@@ -809,12 +801,8 @@ moc_linearfilter.cpp: linearfilter.h \
 		/usr/local/include/opencv4/opencv2/core/utility.hpp \
 		/usr/local/include/opencv4/opencv2/core/optim.hpp \
 		/usr/local/include/opencv4/opencv2/core/ovx.hpp \
-		/usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp \
-		/usr/local/include/opencv4/opencv2/imgproc.hpp \
-		/usr/local/include/opencv4/opencv2/imgproc/types_c.h \
-		/usr/local/include/opencv4/opencv2/core/core_c.h \
-		/usr/local/include/opencv4/opencv2/core/types_c.h \
-		imagebase.h \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h \
 		moc_predefs.h \
 		../../Qt/5.12.3/clang_64/bin/moc
 	/Users/jameshook/Qt/5.12.3/clang_64/bin/moc $(DEFINES) --include /Users/jameshook/opencv/OpenCVQml/moc_predefs.h -I/Users/jameshook/Qt/5.12.3/clang_64/mkspecs/macx-clang -I/Users/jameshook/opencv/OpenCVQml -I/usr/local/include/opencv4 -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtGui.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQml.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtNetwork.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtCore.framework/Headers -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/jameshook/Qt/5.12.3/clang_64/lib linearfilter.h -o moc_linearfilter.cpp
@@ -859,7 +847,9 @@ moc_mat.cpp: mat.h \
 		/usr/local/include/opencv4/opencv2/imgproc/types_c.h \
 		/usr/local/include/opencv4/opencv2/core/core_c.h \
 		/usr/local/include/opencv4/opencv2/core/types_c.h \
-		imagebase.h \
+		linearfilter.h \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
 		moc_predefs.h \
 		../../Qt/5.12.3/clang_64/bin/moc
 	/Users/jameshook/Qt/5.12.3/clang_64/bin/moc $(DEFINES) --include /Users/jameshook/opencv/OpenCVQml/moc_predefs.h -I/Users/jameshook/Qt/5.12.3/clang_64/mkspecs/macx-clang -I/Users/jameshook/opencv/OpenCVQml -I/usr/local/include/opencv4 -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtGui.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQml.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtNetwork.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtCore.framework/Headers -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/jameshook/Qt/5.12.3/clang_64/lib mat.h -o moc_mat.cpp
@@ -880,14 +870,10 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-imagebase.o: imagebase.cpp imagebase.h \
-		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickPaintedItem \
-		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickpainteditem.h \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QPainter \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qpainter.h \
-		/usr/local/include/opencv4/opencv2/imgcodecs.hpp \
+blur.o: blur.cpp blur.h \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
+		/usr/local/include/opencv4/opencv2/imgproc.hpp \
 		/usr/local/include/opencv4/opencv2/core.hpp \
 		/usr/local/include/opencv4/opencv2/core/cvdef.h \
 		/usr/local/include/opencv4/opencv2/core/hal/interface.h \
@@ -915,26 +901,20 @@ imagebase.o: imagebase.cpp imagebase.h \
 		/usr/local/include/opencv4/opencv2/core/utility.hpp \
 		/usr/local/include/opencv4/opencv2/core/optim.hpp \
 		/usr/local/include/opencv4/opencv2/core/ovx.hpp \
+		/usr/local/include/opencv4/opencv2/imgcodecs.hpp \
+		/usr/local/include/opencv4/opencv2/highgui.hpp \
+		/usr/local/include/opencv4/opencv2/videoio.hpp \
+		linearfilter.h \
 		/usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp \
-		/usr/local/include/opencv4/opencv2/imgproc.hpp \
-		/usr/local/include/opencv4/opencv2/imgproc/types_c.h \
-		/usr/local/include/opencv4/opencv2/core/core_c.h \
-		/usr/local/include/opencv4/opencv2/core/types_c.h \
-		../../Qt/5.12.3/clang_64/lib/QtCore.framework/Headers/QDebug \
-		../../Qt/5.12.3/clang_64/lib/QtCore.framework/Headers/qdebug.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o imagebase.o imagebase.cpp
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o blur.o blur.cpp
 
 linearfilter.o: linearfilter.cpp linearfilter.h \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
-		mat.h \
-		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickPaintedItem \
-		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickpainteditem.h \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QPainter \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qpainter.h \
-		/usr/local/include/opencv4/opencv2/imgcodecs.hpp \
+		/usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv4/opencv2/imgproc.hpp \
 		/usr/local/include/opencv4/opencv2/core.hpp \
 		/usr/local/include/opencv4/opencv2/core/cvdef.h \
 		/usr/local/include/opencv4/opencv2/core/hal/interface.h \
@@ -962,16 +942,16 @@ linearfilter.o: linearfilter.cpp linearfilter.h \
 		/usr/local/include/opencv4/opencv2/core/utility.hpp \
 		/usr/local/include/opencv4/opencv2/core/optim.hpp \
 		/usr/local/include/opencv4/opencv2/core/ovx.hpp \
-		/usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp \
-		/usr/local/include/opencv4/opencv2/imgproc.hpp \
-		/usr/local/include/opencv4/opencv2/imgproc/types_c.h \
-		/usr/local/include/opencv4/opencv2/core/core_c.h \
-		/usr/local/include/opencv4/opencv2/core/types_c.h \
-		imagebase.h \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		/usr/local/include/opencv4/opencv2/imgcodecs.hpp \
 		/usr/local/include/opencv4/opencv2/highgui.hpp \
 		/usr/local/include/opencv4/opencv2/videoio.hpp \
 		../../Qt/5.12.3/clang_64/lib/QtCore.framework/Headers/QDebug \
-		../../Qt/5.12.3/clang_64/lib/QtCore.framework/Headers/qdebug.h
+		../../Qt/5.12.3/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		/usr/local/include/opencv4/opencv2/imgproc/types_c.h \
+		/usr/local/include/opencv4/opencv2/core/core_c.h \
+		/usr/local/include/opencv4/opencv2/core/types_c.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o linearfilter.o linearfilter.cpp
 
 main.o: main.cpp ../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QGuiApplication \
@@ -1018,10 +998,12 @@ main.o: main.cpp ../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QGuiApplic
 		/usr/local/include/opencv4/opencv2/imgproc/types_c.h \
 		/usr/local/include/opencv4/opencv2/core/core_c.h \
 		/usr/local/include/opencv4/opencv2/core/types_c.h \
-		imagebase.h \
 		linearfilter.h \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
-		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
+		blur.h \
+		/usr/local/include/opencv4/opencv2/highgui.hpp \
+		/usr/local/include/opencv4/opencv2/videoio.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mat.o: mat.cpp mat.h \
@@ -1064,14 +1046,18 @@ mat.o: mat.cpp mat.h \
 		/usr/local/include/opencv4/opencv2/imgproc/types_c.h \
 		/usr/local/include/opencv4/opencv2/core/core_c.h \
 		/usr/local/include/opencv4/opencv2/core/types_c.h \
-		imagebase.h
+		linearfilter.h \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
+		../../Qt/5.12.3/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../Qt/5.12.3/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mat.o mat.cpp
 
 qrc_qml.o: qrc_qml.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_qml.o qrc_qml.cpp
 
-moc_imagebase.o: moc_imagebase.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_imagebase.o moc_imagebase.cpp
+moc_blur.o: moc_blur.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_blur.o moc_blur.cpp
 
 moc_linearfilter.o: moc_linearfilter.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_linearfilter.o moc_linearfilter.cpp

@@ -3,43 +3,51 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 #include <QDebug>
+#include "opencv2/imgproc/types_c.h"
 
-
-LinearFilter::LinearFilter()
+LinearFilter::LinearFilter(QObject* parent)
 {
 
 }
 
-Mat *LinearFilter::source() const
+
+
+cv::Mat LinearFilter::matFromQimage(const QImage &im)
 {
-    return source_;
+    return cv::Mat(
+        im.height(),
+        im.width(),
+        CV_8UC3,
+        const_cast<unsigned char*>(im.bits()),
+        im.bytesPerLine()
+    );
 }
 
-void LinearFilter::setSource(Mat *source)
+QImage LinearFilter::qimageFromMat(const cv::Mat &mat)
 {
-    source_ = source;
-    setImage(source->image());
-    QObject::connect(source_,SIGNAL(baseImageChanged()),this,SLOT(transform()));
+    cv::Mat rgbMat;
+    QImage img;
+    if (mat.channels() == 1) {
+      img =  QImage(
+         (uchar*)mat.data,
+         mat.cols,
+         mat.rows,
+         (int)mat.step,
+         QImage::Format_Indexed8
+      ).copy();
+    } else if (mat.channels() == 3) {
+      cv::cvtColor(mat, rgbMat, CV_BGR2RGB);
+      img =  QImage(
+         (uchar*)rgbMat.data,
+         mat.cols,
+         mat.rows,
+         (int)mat.step,
+         QImage::Format_RGB888
+      ).copy();
+    }
+    return img;
 }
 
-
-
-void LinearFilter::paint(QPainter *painter)
-{
-    QRectF rect = boundingRect();
-    painter->drawImage(rect,ImageBase::image());
-}
-
-
-void LinearFilter::transform()
-{
-    cv::Mat input = source_->matrix();
-    cv::Mat output;
-    cv::blur( input,output,cv::Size(15,15));
-
-    setImage(output);
-    update();
-}
 
 
 

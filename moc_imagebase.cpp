@@ -105,7 +105,7 @@ void ImageBase::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
 }
 
 QT_INIT_METAOBJECT const QMetaObject ImageBase::staticMetaObject = { {
-    &QQuickPaintedItem::staticMetaObject,
+    &QQuickItem::staticMetaObject,
     qt_meta_stringdata_ImageBase.data,
     qt_meta_data_ImageBase,
     qt_static_metacall,
@@ -124,12 +124,12 @@ void *ImageBase::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_ImageBase.stringdata0))
         return static_cast<void*>(this);
-    return QQuickPaintedItem::qt_metacast(_clname);
+    return QQuickItem::qt_metacast(_clname);
 }
 
 int ImageBase::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QQuickPaintedItem::qt_metacall(_c, _id, _a);
+    _id = QQuickItem::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

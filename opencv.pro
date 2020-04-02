@@ -21,7 +21,7 @@ LIBS +=  -L/usr/local/lib \
 
 
 SOURCES += \
-        imagebase.cpp \
+        blur.cpp \
         linearfilter.cpp \
         main.cpp \
         mat.cpp
@@ -40,7 +40,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    imagebase.h \
+    blur.h \
     linearfilter.h \
     mat.h
 

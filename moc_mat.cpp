@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Mat_t {
-    QByteArrayData data[6];
-    char stringdata0[37];
+    QByteArrayData data[10];
+    char stringdata0[101];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,14 +32,20 @@ struct qt_meta_stringdata_Mat_t {
 static const qt_meta_stringdata_Mat_t qt_meta_stringdata_Mat = {
     {
 QT_MOC_LITERAL(0, 0, 3), // "Mat"
-QT_MOC_LITERAL(1, 4, 12), // "imageChanged"
-QT_MOC_LITERAL(2, 17, 0), // ""
-QT_MOC_LITERAL(3, 18, 3), // "img"
-QT_MOC_LITERAL(4, 22, 8), // "filename"
-QT_MOC_LITERAL(5, 31, 5) // "image"
+QT_MOC_LITERAL(1, 4, 16), // "baseImageChanged"
+QT_MOC_LITERAL(2, 21, 0), // ""
+QT_MOC_LITERAL(3, 22, 12), // "imageChanged"
+QT_MOC_LITERAL(4, 35, 13), // "filterChanged"
+QT_MOC_LITERAL(5, 49, 15), // "filenameChanged"
+QT_MOC_LITERAL(6, 65, 8), // "filename"
+QT_MOC_LITERAL(7, 74, 5), // "image"
+QT_MOC_LITERAL(8, 80, 6), // "filter"
+QT_MOC_LITERAL(9, 87, 13) // "LinearFilter*"
 
     },
-    "Mat\0imageChanged\0\0img\0filename\0image"
+    "Mat\0baseImageChanged\0\0imageChanged\0"
+    "filterChanged\0filenameChanged\0filename\0"
+    "image\0filter\0LinearFilter*"
 };
 #undef QT_MOC_LITERAL
 
@@ -49,26 +55,34 @@ static const uint qt_meta_data_Mat[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
-       2,   22, // properties
+       4,   14, // methods
+       3,   38, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   19,    2, 0x06 /* Public */,
+       1,    0,   34,    2, 0x06 /* Public */,
+       3,    0,   35,    2, 0x06 /* Public */,
+       4,    0,   36,    2, 0x06 /* Public */,
+       5,    0,   37,    2, 0x06 /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QImage,    3,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
 
  // properties: name, type, flags
-       4, QMetaType::QString, 0x00095103,
-       5, QMetaType::QImage, 0x00495103,
+       6, QMetaType::QString, 0x00495103,
+       7, QMetaType::QImage, 0x00495103,
+       8, 0x80000000 | 9, 0x0049510b,
 
  // properties: notify_signal_id
-       0,
-       0,
+       3,
+       1,
+       2,
 
        0        // eod
 };
@@ -79,19 +93,50 @@ void Mat::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **
         auto *_t = static_cast<Mat *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->imageChanged((*reinterpret_cast< const QImage(*)>(_a[1]))); break;
+        case 0: _t->baseImageChanged(); break;
+        case 1: _t->imageChanged(); break;
+        case 2: _t->filterChanged(); break;
+        case 3: _t->filenameChanged(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (Mat::*)(const QImage & );
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Mat::imageChanged)) {
+            using _t = void (Mat::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Mat::baseImageChanged)) {
                 *result = 0;
                 return;
             }
         }
+        {
+            using _t = void (Mat::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Mat::imageChanged)) {
+                *result = 1;
+                return;
+            }
+        }
+        {
+            using _t = void (Mat::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Mat::filterChanged)) {
+                *result = 2;
+                return;
+            }
+        }
+        {
+            using _t = void (Mat::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Mat::filenameChanged)) {
+                *result = 3;
+                return;
+            }
+        }
+    } else if (_c == QMetaObject::RegisterPropertyMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 2:
+            *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< LinearFilter* >(); break;
+        }
     }
+
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty) {
         auto *_t = static_cast<Mat *>(_o);
@@ -100,6 +145,7 @@ void Mat::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **
         switch (_id) {
         case 0: *reinterpret_cast< QString*>(_v) = _t->filename(); break;
         case 1: *reinterpret_cast< QImage*>(_v) = _t->image(); break;
+        case 2: *reinterpret_cast< LinearFilter**>(_v) = _t->filter(); break;
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
@@ -109,6 +155,7 @@ void Mat::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **
         switch (_id) {
         case 0: _t->setFilename(*reinterpret_cast< QString*>(_v)); break;
         case 1: _t->setImage(*reinterpret_cast< QImage*>(_v)); break;
+        case 2: _t->setFilter(*reinterpret_cast< LinearFilter**>(_v)); break;
         default: break;
         }
     } else if (_c == QMetaObject::ResetProperty) {
@@ -117,7 +164,7 @@ void Mat::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **
 }
 
 QT_INIT_METAOBJECT const QMetaObject Mat::staticMetaObject = { {
-    &ImageBase::staticMetaObject,
+    &QQuickPaintedItem::staticMetaObject,
     qt_meta_stringdata_Mat.data,
     qt_meta_data_Mat,
     qt_static_metacall,
@@ -136,48 +183,65 @@ void *Mat::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_Mat.stringdata0))
         return static_cast<void*>(this);
-    return ImageBase::qt_metacast(_clname);
+    return QQuickPaintedItem::qt_metacast(_clname);
 }
 
 int Mat::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = ImageBase::qt_metacall(_c, _id, _a);
+    _id = QQuickPaintedItem::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 1)
+        if (_id < 4)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 1;
+        _id -= 4;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 2;
+        _id -= 3;
     }
 #endif // QT_NO_PROPERTIES
     return _id;
 }
 
 // SIGNAL 0
-void Mat::imageChanged(const QImage & _t1)
+void Mat::baseImageChanged()
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 0, _a);
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
+}
+
+// SIGNAL 1
+void Mat::imageChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
+}
+
+// SIGNAL 2
+void Mat::filterChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
+}
+
+// SIGNAL 3
+void Mat::filenameChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

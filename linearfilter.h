@@ -2,34 +2,24 @@
 #define LINEARFILTER_H
 
 #include <QQuickItem>
-#include "mat.h"
+#include "opencv2/imgproc/imgproc.hpp"
+#include <QImage>
 
-
-
-class LinearFilter : public ImageBase
+class LinearFilter : public QQuickItem
 {
     Q_OBJECT
-    Q_PROPERTY(Mat* source WRITE setSource READ source NOTIFY sourceChanged)
 
 public:
-    LinearFilter();
+    LinearFilter(QObject* parent = nullptr) ;
+    virtual QImage transform(const QImage& input) = 0;
 
-    Mat *source() const;
-    void setSource(Mat *source);
-
-    QImage image() const;
-    void paint(QPainter *painter);
-
-private slots:
-    void transform();
+protected:
+    static cv::Mat matFromQimage(const QImage& im);
+    static QImage qimageFromMat( const cv::Mat& m);
 
 signals:
     void sourceChanged();
     void imageChanged(const QImage&);
-
-private:
-
-    Mat* source_;
 
 };
 

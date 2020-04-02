@@ -1,7 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include "mat.h"
-#include "linearfilter.h"
+#include "blur.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,8 +17,9 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
 
+    qmlRegisterType<LinearFilter>();
     qmlRegisterType<Mat>("OpenCV", 1, 0, "Mat");
-    qmlRegisterType<LinearFilter>("OpenCV", 1, 0, "LinearFilter");
+    qmlRegisterType<Blur>("OpenCV", 1, 0, "Blur");
     engine.load(url);
 
     return app.exec();

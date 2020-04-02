@@ -16,7 +16,7 @@ Window {
             text: "Boo"
             onClicked: {
                 im1.filename = "/Users/jameshook/data/cakes.jpg";
-              ///  lin.source = im1;
+               // lin.filename = "/Users/jameshook/data/cakes.jpg";
             }
         }
 
@@ -25,21 +25,19 @@ Window {
             Layout.fillHeight: true
             Layout.fillWidth: true
             filename: "/Users/jameshook/data/lena.jpg"
-            onBaseImageChanged: console.log("aaaa");
         }
-        LinearFilter {
+        Mat {
             id: lin
-            source: im1
+            image: im1.image
             Layout.fillHeight: true
             Layout.fillWidth: true
-            onImageChanged: console.log("image changed");
+            filter: Blur {
+                width: 15
+                height: 15
+            }
+            onImageChanged: console.log("image changed <<<<");
         }
-//        Mat {
-//            Layout.fillHeight: true
-//            Layout.fillWidth: true
-//            id: im2
-//            image: lin.image
-//        }
+
     }
 
 
