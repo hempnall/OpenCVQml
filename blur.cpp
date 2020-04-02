@@ -1,5 +1,5 @@
 #include "blur.h"
-
+#include "ImageUtilities.h"
 
 Blur::Blur(QObject* parent): LinearFilter(parent)
 {

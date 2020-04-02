@@ -16,7 +16,6 @@ Window {
             text: "Boo"
             onClicked: {
                 im1.filename = "/Users/jameshook/data/cakes.jpg";
-               // lin.filename = "/Users/jameshook/data/cakes.jpg";
             }
         }
 
