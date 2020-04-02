@@ -23,6 +23,7 @@ LIBS +=  -L/usr/local/lib \
 SOURCES += \
         ImageUtilities.cpp \
         blur.cpp \
+        guassianblur.cpp \
         linearfilter.cpp \
         main.cpp \
         mat.cpp
@@ -43,6 +44,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     ImageUtilities.h \
     blur.h \
+    guassianblur.h \
     linearfilter.h \
     mat.h
 

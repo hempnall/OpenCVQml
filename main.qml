@@ -37,7 +37,7 @@ Window {
             image: im1.image
             Layout.fillHeight: true
             Layout.fillWidth: true
-            filter: Blur {
+            filter: GuassianBlur {
                 width: slider1.value
                 height: slider1.value
             }

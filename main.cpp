@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include "mat.h"
 #include "blur.h"
+#include "guassianblur.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<LinearFilter>();
     qmlRegisterType<Mat>("OpenCV", 1, 0, "Mat");
     qmlRegisterType<Blur>("OpenCV", 1, 0, "Blur");
+    qmlRegisterType<GuassianBlur>("OpenCV", 1, 0, "GuassianBlur");
     engine.load(url);
 
     return app.exec();
