@@ -53,21 +53,23 @@ Window {
             }
         }
         Mat {
+            id: lin3
+            image: lin.image
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            filter: Convert {}
+        }
+        Mat {
             id: lin2
-            image: im1.image
+            image: lin3.image
             Layout.fillHeight: true
             Layout.fillWidth: true
             filter: Sobel {
-                dx: 2
-                dy: 2
+                dx: 1
+                dy: 1
             }
         }
-        Mat {
-            id: lin3
-            image: lin2.image
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-        }
+
     }
 
 

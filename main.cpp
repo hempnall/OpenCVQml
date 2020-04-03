@@ -4,6 +4,7 @@
 #include "blur.h"
 #include "guassianblur.h"
 #include "sobel.h"
+#include "convert.h"
 
 int main(int argc, char *argv[])
 {
@@ -24,6 +25,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<Blur>("OpenCV", 1, 0, "Blur");
     qmlRegisterType<GuassianBlur>("OpenCV", 1, 0, "GuassianBlur");
     qmlRegisterType<Sobel>("OpenCV", 1, 0, "Sobel");
+    qmlRegisterType<Convert>("OpenCV", 1, 0, "Convert");
     engine.load(url);
 
     return app.exec();
