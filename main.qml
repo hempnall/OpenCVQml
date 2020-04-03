@@ -25,6 +25,12 @@ Window {
                 to: 50
                 value: 1
             }
+            Slider {
+                id: slider2
+                from: 1
+                to: 50
+                value: 1
+            }
             Text {
                 text: gb.transformCount;
             }
@@ -43,7 +49,7 @@ Window {
             filter: GuassianBlur {
                 id: gb
                 width: slider1.value
-                height: slider1.value
+                height: slider2.value
             }
         }
         Mat {
