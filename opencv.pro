@@ -26,7 +26,8 @@ SOURCES += \
         guassianblur.cpp \
         linearfilter.cpp \
         main.cpp \
-        mat.cpp
+        mat.cpp \
+        sobel.cpp
 
 RESOURCES += qml.qrc
 
@@ -46,7 +47,8 @@ HEADERS += \
     blur.h \
     guassianblur.h \
     linearfilter.h \
-    mat.h
+    mat.h \
+    sobel.h
 
 DISTFILES += \
     README.md

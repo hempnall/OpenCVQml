@@ -22,13 +22,13 @@ Window {
             Slider {
                 id: slider1
                 from: 1
-                to: 50
+                to: 200
                 value: 1
             }
             Slider {
                 id: slider2
                 from: 1
-                to: 50
+                to: 200
                 value: 1
             }
             Text {
@@ -54,9 +54,13 @@ Window {
         }
         Mat {
             id: lin2
-            image: lin.image
+            image: im1.image
             Layout.fillHeight: true
             Layout.fillWidth: true
+            filter: Sobel {
+                dx: 2
+                dy: 2
+            }
         }
         Mat {
             id: lin3

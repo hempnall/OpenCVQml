@@ -32,13 +32,15 @@ QImage Mat::image() const
     if (filter_ == nullptr)    {
         return image_;
     } else {
-        if (cacheValid_) {
-            return cachedTransformedImage_;
-        } else {
-            cachedTransformedImage_ = filter_->transform(image_);
-            cacheValid_ = true;
-            return cachedTransformedImage_;
+        if (!cacheValid_) {
+            if (filter_->validateParameters()) {
+                cachedTransformedImage_ = filter_->transform(image_);
+                cacheValid_ = true;
+            } else {
+                cachedTransformedImage_ = image_;
+            }
         }
+        return cachedTransformedImage_;
     }
 }
 
