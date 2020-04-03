@@ -25,6 +25,9 @@ Window {
                 to: 50
                 value: 1
             }
+            Text {
+                text: gb.transformCount;
+            }
         }
         Mat {
             id: im1
@@ -38,6 +41,7 @@ Window {
             Layout.fillHeight: true
             Layout.fillWidth: true
             filter: GuassianBlur {
+                id: gb
                 width: slider1.value
                 height: slider1.value
             }
@@ -45,6 +49,12 @@ Window {
         Mat {
             id: lin2
             image: lin.image
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+        }
+        Mat {
+            id: lin3
+            image: lin2.image
             Layout.fillHeight: true
             Layout.fillWidth: true
         }

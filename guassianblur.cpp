@@ -58,6 +58,7 @@ QImage GuassianBlur::transform(const QImage &input)
     cv::Mat in = matFromQimage(input);
     cv::Mat out;
     cv::GaussianBlur(in,out,cv::Size( makeOdd(size_.width()),makeOdd(size_.height())),0,0,cv::BorderTypes::BORDER_DEFAULT);
+    incrementTransformCount();
     return qimageFromMat(out);
 }
 

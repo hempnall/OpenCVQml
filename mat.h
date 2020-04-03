@@ -20,9 +20,11 @@ class Mat :
 
 
     QImage image_;
+    mutable QImage cachedTransformedImage_;
     QString filename_;
     cv::Mat mat_;
     LinearFilter *filter_;
+    mutable bool cacheValid_;
 
 public:
     Mat();

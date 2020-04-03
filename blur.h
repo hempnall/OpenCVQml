@@ -14,6 +14,7 @@ class Blur : public LinearFilter
     Q_PROPERTY(QRect size READ size WRITE setSize NOTIFY sizeChanged)
     Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
     Q_PROPERTY(int height READ height WRITE setHeight NOTIFY heightChanged)
+   // Q_PROPERTY(int transformCount READ transformCount  NOTIFY transformCountChanged)
 
 public:
     Blur(QObject* parent = nullptr);

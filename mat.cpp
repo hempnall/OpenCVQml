@@ -2,7 +2,7 @@
 #include <QDebug>
 
 Mat::Mat()
-    : filter_(nullptr)
+    : filter_(nullptr), cacheValid_(false)
 {
 
 }
@@ -32,13 +32,20 @@ QImage Mat::image() const
     if (filter_ == nullptr)    {
         return image_;
     } else {
-        return filter_->transform(image_);
+        if (cacheValid_) {
+            return cachedTransformedImage_;
+        } else {
+            cachedTransformedImage_ = filter_->transform(image_);
+            cacheValid_ = true;
+            return cachedTransformedImage_;
+        }
     }
 }
 
 void Mat::setImage(const QImage &image)
 {
     image_ = image;
+    cacheValid_ = false;
     update();
     emit imageChanged();
 }
@@ -89,6 +96,7 @@ void Mat::setImage(const cv::Mat &mat)
 
 void Mat::invalidateImage()
 {
+    cacheValid_ = false;
     update();
     emit imageChanged();
 }

@@ -15,6 +15,7 @@ class GuassianBlur : public LinearFilter
     Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
     Q_PROPERTY(int height READ height WRITE setHeight NOTIFY heightChanged)
 
+
 public:
     GuassianBlur(QObject* parent = nullptr);
     QImage transform(const QImage& im);
