@@ -46,11 +46,11 @@ Window {
             image: im1.image
             Layout.fillHeight: true
             Layout.fillWidth: true
-            filter: GuassianBlur {
-                id: gb
-                width: slider1.value
-                height: slider2.value
-            }
+//            filter: GuassianBlur {
+//                id: gb
+//                width: slider1.value
+//                height: slider2.value
+//            }
         }
         Mat {
             id: lin3
@@ -64,9 +64,9 @@ Window {
             image: lin3.image
             Layout.fillHeight: true
             Layout.fillWidth: true
-            filter: Sobel {
-                dx: 1
-                dy: 1
+            filter: Canny {
+                threshold1: slider1.value
+                threshold2: slider2.value
             }
         }
 

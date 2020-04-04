@@ -54,6 +54,7 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ImageUtilities.cpp \
 		blur.cpp \
+		canny.cpp \
 		convert.cpp \
 		guassianblur.cpp \
 		linearfilter.cpp \
@@ -61,6 +62,7 @@ SOURCES       = ImageUtilities.cpp \
 		mat.cpp \
 		sobel.cpp qrc_qml.cpp \
 		moc_blur.cpp \
+		moc_canny.cpp \
 		moc_convert.cpp \
 		moc_guassianblur.cpp \
 		moc_linearfilter.cpp \
@@ -68,6 +70,7 @@ SOURCES       = ImageUtilities.cpp \
 		moc_sobel.cpp
 OBJECTS       = ImageUtilities.o \
 		blur.o \
+		canny.o \
 		convert.o \
 		guassianblur.o \
 		linearfilter.o \
@@ -76,6 +79,7 @@ OBJECTS       = ImageUtilities.o \
 		sobel.o \
 		qrc_qml.o \
 		moc_blur.o \
+		moc_canny.o \
 		moc_convert.o \
 		moc_guassianblur.o \
 		moc_linearfilter.o \
@@ -264,12 +268,14 @@ DIST          = README.md \
 		../../Qt/5.12.3/clang_64/mkspecs/features/lex.prf \
 		opencv.pro ImageUtilities.h \
 		blur.h \
+		canny.h \
 		convert.h \
 		guassianblur.h \
 		linearfilter.h \
 		mat.h \
 		sobel.h ImageUtilities.cpp \
 		blur.cpp \
+		canny.cpp \
 		convert.cpp \
 		guassianblur.cpp \
 		linearfilter.cpp \
@@ -704,8 +710,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../Qt/5.12.3/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ImageUtilities.h blur.h convert.h guassianblur.h linearfilter.h mat.h sobel.h $(DISTDIR)/
-	$(COPY_FILE) --parents ImageUtilities.cpp blur.cpp convert.cpp guassianblur.cpp linearfilter.cpp main.cpp mat.cpp sobel.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ImageUtilities.h blur.h canny.h convert.h guassianblur.h linearfilter.h mat.h sobel.h $(DISTDIR)/
+	$(COPY_FILE) --parents ImageUtilities.cpp blur.cpp canny.cpp convert.cpp guassianblur.cpp linearfilter.cpp main.cpp mat.cpp sobel.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -746,9 +752,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../Qt/5.12.3/clang_64/mkspecs/features/data/dummy.cpp
 	/Library/Developer/CommandLineTools/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.12 -Wall -W -dM -E -o moc_predefs.h ../../Qt/5.12.3/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_blur.cpp moc_convert.cpp moc_guassianblur.cpp moc_linearfilter.cpp moc_mat.cpp moc_sobel.cpp
+compiler_moc_header_make_all: moc_blur.cpp moc_canny.cpp moc_convert.cpp moc_guassianblur.cpp moc_linearfilter.cpp moc_mat.cpp moc_sobel.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_blur.cpp moc_convert.cpp moc_guassianblur.cpp moc_linearfilter.cpp moc_mat.cpp moc_sobel.cpp
+	-$(DEL_FILE) moc_blur.cpp moc_canny.cpp moc_convert.cpp moc_guassianblur.cpp moc_linearfilter.cpp moc_mat.cpp moc_sobel.cpp
 moc_blur.cpp: blur.h \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
@@ -789,6 +795,16 @@ moc_blur.cpp: blur.h \
 		moc_predefs.h \
 		../../Qt/5.12.3/clang_64/bin/moc
 	/Users/jameshook/Qt/5.12.3/clang_64/bin/moc $(DEFINES) --include /Users/jameshook/opencv/OpenCVQml/moc_predefs.h -I/Users/jameshook/Qt/5.12.3/clang_64/mkspecs/macx-clang -I/Users/jameshook/opencv/OpenCVQml -I/usr/local/include/opencv4 -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtGui.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQml.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtNetwork.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtCore.framework/Headers -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/jameshook/Qt/5.12.3/clang_64/lib blur.h -o moc_blur.cpp
+
+moc_canny.cpp: canny.h \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		linearfilter.h \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
+		moc_predefs.h \
+		../../Qt/5.12.3/clang_64/bin/moc
+	/Users/jameshook/Qt/5.12.3/clang_64/bin/moc $(DEFINES) --include /Users/jameshook/opencv/OpenCVQml/moc_predefs.h -I/Users/jameshook/Qt/5.12.3/clang_64/mkspecs/macx-clang -I/Users/jameshook/opencv/OpenCVQml -I/usr/local/include/opencv4 -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtGui.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQml.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtNetwork.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtCore.framework/Headers -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/jameshook/Qt/5.12.3/clang_64/lib canny.h -o moc_canny.cpp
 
 moc_convert.cpp: convert.h \
 		../../Qt/5.12.3/clang_64/lib/QtCore.framework/Headers/QObject \
@@ -996,6 +1012,44 @@ blur.o: blur.cpp blur.h \
 		ImageUtilities.h \
 		/usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o blur.o blur.cpp
+
+canny.o: canny.cpp canny.h \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		linearfilter.h \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
+		ImageUtilities.h \
+		/usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv4/opencv2/imgproc.hpp \
+		/usr/local/include/opencv4/opencv2/core.hpp \
+		/usr/local/include/opencv4/opencv2/core/cvdef.h \
+		/usr/local/include/opencv4/opencv2/core/hal/interface.h \
+		/usr/local/include/opencv4/opencv2/core/cv_cpu_dispatch.h \
+		/usr/local/include/opencv4/opencv2/core/cv_cpu_helper.h \
+		/usr/local/include/opencv4/opencv2/core/fast_math.hpp \
+		/usr/local/include/opencv4/opencv2/core/version.hpp \
+		/usr/local/include/opencv4/opencv2/core/base.hpp \
+		/usr/local/include/opencv4/opencv2/opencv_modules.hpp \
+		/usr/local/include/opencv4/opencv2/core/cvstd.hpp \
+		/usr/local/include/opencv4/opencv2/core/cvstd_wrapper.hpp \
+		/usr/local/include/opencv4/opencv2/core/neon_utils.hpp \
+		/usr/local/include/opencv4/opencv2/core/vsx_utils.hpp \
+		/usr/local/include/opencv4/opencv2/core/check.hpp \
+		/usr/local/include/opencv4/opencv2/core/traits.hpp \
+		/usr/local/include/opencv4/opencv2/core/matx.hpp \
+		/usr/local/include/opencv4/opencv2/core/saturate.hpp \
+		/usr/local/include/opencv4/opencv2/core/types.hpp \
+		/usr/local/include/opencv4/opencv2/core/mat.hpp \
+		/usr/local/include/opencv4/opencv2/core/bufferpool.hpp \
+		/usr/local/include/opencv4/opencv2/core/mat.inl.hpp \
+		/usr/local/include/opencv4/opencv2/core/persistence.hpp \
+		/usr/local/include/opencv4/opencv2/core/operations.hpp \
+		/usr/local/include/opencv4/opencv2/core/cvstd.inl.hpp \
+		/usr/local/include/opencv4/opencv2/core/utility.hpp \
+		/usr/local/include/opencv4/opencv2/core/optim.hpp \
+		/usr/local/include/opencv4/opencv2/core/ovx.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o canny.o canny.cpp
 
 convert.o: convert.cpp convert.h \
 		../../Qt/5.12.3/clang_64/lib/QtCore.framework/Headers/QObject \
@@ -1266,6 +1320,9 @@ qrc_qml.o: qrc_qml.cpp
 
 moc_blur.o: moc_blur.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_blur.o moc_blur.cpp
+
+moc_canny.o: moc_canny.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_canny.o moc_canny.cpp
 
 moc_convert.o: moc_convert.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_convert.o moc_convert.cpp

@@ -5,6 +5,7 @@
 #include "guassianblur.h"
 #include "sobel.h"
 #include "convert.h"
+#include "canny.h"
 
 int main(int argc, char *argv[])
 {
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<GuassianBlur>("OpenCV", 1, 0, "GuassianBlur");
     qmlRegisterType<Sobel>("OpenCV", 1, 0, "Sobel");
     qmlRegisterType<Convert>("OpenCV", 1, 0, "Convert");
+    qmlRegisterType<Canny>("OpenCV", 1, 0, "Canny");
     engine.load(url);
 
     return app.exec();
