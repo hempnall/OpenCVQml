@@ -42,10 +42,7 @@ Window {
             filename: "/Users/jameshook/data/lena.jpg"
             regions: [
                 Region {
-                    region: Qt.rect(10,20,200,250);
-                },
-                Region {
-                    region: Qt.rect(67,44,34,222);
+                    region: Qt.rect(10,20,256,256);
                 }
             ]
         }

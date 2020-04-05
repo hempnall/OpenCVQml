@@ -2,6 +2,7 @@
 #define REGION_H
 
 #include <QQuickItem>
+#include <QImage>
 
 class Region : public QQuickItem
 {
@@ -10,7 +11,7 @@ class Region : public QQuickItem
 
 public:
     Region();
-
+    void paint(QPainter *painter,const QImage& im,const QRectF& boundRect);
     QRect region() const;
     void setRegion(const QRect &region);
 
@@ -21,6 +22,7 @@ public slots:
 
 private:
     QRect region_;
+    QRectF scaledRectangle(const QImage& im, const QRect& rect,const QRectF& boundRect);
 };
 
 #endif // REGION_H
