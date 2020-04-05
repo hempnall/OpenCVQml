@@ -6,6 +6,8 @@
 #include "sobel.h"
 #include "convert.h"
 #include "canny.h"
+#include "matchtemplate.h"
+#include "region.h"
 
 int main(int argc, char *argv[])
 {
@@ -28,6 +30,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<Sobel>("OpenCV", 1, 0, "Sobel");
     qmlRegisterType<Convert>("OpenCV", 1, 0, "Convert");
     qmlRegisterType<Canny>("OpenCV", 1, 0, "Canny");
+    qmlRegisterType<Region>("OpenCV", 1, 0, "Region");
     engine.load(url);
 
     return app.exec();

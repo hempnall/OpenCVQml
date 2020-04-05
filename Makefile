@@ -60,6 +60,8 @@ SOURCES       = ImageUtilities.cpp \
 		linearfilter.cpp \
 		main.cpp \
 		mat.cpp \
+		matchtemplate.cpp \
+		region.cpp \
 		sobel.cpp qrc_qml.cpp \
 		moc_blur.cpp \
 		moc_canny.cpp \
@@ -67,6 +69,8 @@ SOURCES       = ImageUtilities.cpp \
 		moc_guassianblur.cpp \
 		moc_linearfilter.cpp \
 		moc_mat.cpp \
+		moc_matchtemplate.cpp \
+		moc_region.cpp \
 		moc_sobel.cpp
 OBJECTS       = ImageUtilities.o \
 		blur.o \
@@ -76,6 +80,8 @@ OBJECTS       = ImageUtilities.o \
 		linearfilter.o \
 		main.o \
 		mat.o \
+		matchtemplate.o \
+		region.o \
 		sobel.o \
 		qrc_qml.o \
 		moc_blur.o \
@@ -84,6 +90,8 @@ OBJECTS       = ImageUtilities.o \
 		moc_guassianblur.o \
 		moc_linearfilter.o \
 		moc_mat.o \
+		moc_matchtemplate.o \
+		moc_region.o \
 		moc_sobel.o
 DIST          = README.md \
 		../../Qt/5.12.3/clang_64/mkspecs/features/spec_pre.prf \
@@ -273,6 +281,8 @@ DIST          = README.md \
 		guassianblur.h \
 		linearfilter.h \
 		mat.h \
+		matchtemplate.h \
+		region.h \
 		sobel.h ImageUtilities.cpp \
 		blur.cpp \
 		canny.cpp \
@@ -281,6 +291,8 @@ DIST          = README.md \
 		linearfilter.cpp \
 		main.cpp \
 		mat.cpp \
+		matchtemplate.cpp \
+		region.cpp \
 		sobel.cpp
 QMAKE_TARGET  = opencv
 DESTDIR       = 
@@ -710,8 +722,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../Qt/5.12.3/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ImageUtilities.h blur.h canny.h convert.h guassianblur.h linearfilter.h mat.h sobel.h $(DISTDIR)/
-	$(COPY_FILE) --parents ImageUtilities.cpp blur.cpp canny.cpp convert.cpp guassianblur.cpp linearfilter.cpp main.cpp mat.cpp sobel.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ImageUtilities.h blur.h canny.h convert.h guassianblur.h linearfilter.h mat.h matchtemplate.h region.h sobel.h $(DISTDIR)/
+	$(COPY_FILE) --parents ImageUtilities.cpp blur.cpp canny.cpp convert.cpp guassianblur.cpp linearfilter.cpp main.cpp mat.cpp matchtemplate.cpp region.cpp sobel.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -752,9 +764,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../Qt/5.12.3/clang_64/mkspecs/features/data/dummy.cpp
 	/Library/Developer/CommandLineTools/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.12 -Wall -W -dM -E -o moc_predefs.h ../../Qt/5.12.3/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_blur.cpp moc_canny.cpp moc_convert.cpp moc_guassianblur.cpp moc_linearfilter.cpp moc_mat.cpp moc_sobel.cpp
+compiler_moc_header_make_all: moc_blur.cpp moc_canny.cpp moc_convert.cpp moc_guassianblur.cpp moc_linearfilter.cpp moc_mat.cpp moc_matchtemplate.cpp moc_region.cpp moc_sobel.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_blur.cpp moc_canny.cpp moc_convert.cpp moc_guassianblur.cpp moc_linearfilter.cpp moc_mat.cpp moc_sobel.cpp
+	-$(DEL_FILE) moc_blur.cpp moc_canny.cpp moc_convert.cpp moc_guassianblur.cpp moc_linearfilter.cpp moc_mat.cpp moc_matchtemplate.cpp moc_region.cpp moc_sobel.cpp
 moc_blur.cpp: blur.h \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
@@ -907,9 +919,26 @@ moc_mat.cpp: mat.h \
 		linearfilter.h \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
+		region.h \
 		moc_predefs.h \
 		../../Qt/5.12.3/clang_64/bin/moc
 	/Users/jameshook/Qt/5.12.3/clang_64/bin/moc $(DEFINES) --include /Users/jameshook/opencv/OpenCVQml/moc_predefs.h -I/Users/jameshook/Qt/5.12.3/clang_64/mkspecs/macx-clang -I/Users/jameshook/opencv/OpenCVQml -I/usr/local/include/opencv4 -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtGui.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQml.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtNetwork.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtCore.framework/Headers -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/jameshook/Qt/5.12.3/clang_64/lib mat.h -o moc_mat.cpp
+
+moc_matchtemplate.cpp: matchtemplate.h \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		moc_predefs.h \
+		../../Qt/5.12.3/clang_64/bin/moc
+	/Users/jameshook/Qt/5.12.3/clang_64/bin/moc $(DEFINES) --include /Users/jameshook/opencv/OpenCVQml/moc_predefs.h -I/Users/jameshook/Qt/5.12.3/clang_64/mkspecs/macx-clang -I/Users/jameshook/opencv/OpenCVQml -I/usr/local/include/opencv4 -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtGui.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQml.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtNetwork.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtCore.framework/Headers -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/jameshook/Qt/5.12.3/clang_64/lib matchtemplate.h -o moc_matchtemplate.cpp
+
+moc_region.cpp: region.h \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
+		moc_predefs.h \
+		../../Qt/5.12.3/clang_64/bin/moc
+	/Users/jameshook/Qt/5.12.3/clang_64/bin/moc $(DEFINES) --include /Users/jameshook/opencv/OpenCVQml/moc_predefs.h -I/Users/jameshook/Qt/5.12.3/clang_64/mkspecs/macx-clang -I/Users/jameshook/opencv/OpenCVQml -I/usr/local/include/opencv4 -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtGui.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQml.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtNetwork.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtCore.framework/Headers -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/jameshook/Qt/5.12.3/clang_64/lib region.h -o moc_region.cpp
 
 moc_sobel.cpp: sobel.h \
 		linearfilter.h \
@@ -1220,6 +1249,7 @@ main.o: main.cpp ../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QGuiApplic
 		linearfilter.h \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
+		region.h \
 		blur.h \
 		/usr/local/include/opencv4/opencv2/highgui.hpp \
 		/usr/local/include/opencv4/opencv2/videoio.hpp \
@@ -1227,7 +1257,9 @@ main.o: main.cpp ../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QGuiApplic
 		sobel.h \
 		convert.h \
 		../../Qt/5.12.3/clang_64/lib/QtCore.framework/Headers/QObject \
-		../../Qt/5.12.3/clang_64/lib/QtCore.framework/Headers/qobject.h
+		../../Qt/5.12.3/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		canny.h \
+		matchtemplate.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mat.o: mat.cpp mat.h \
@@ -1273,9 +1305,22 @@ mat.o: mat.cpp mat.h \
 		linearfilter.h \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
+		region.h \
 		../../Qt/5.12.3/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../Qt/5.12.3/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mat.o mat.cpp
+
+matchtemplate.o: matchtemplate.cpp matchtemplate.h \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o matchtemplate.o matchtemplate.cpp
+
+region.o: region.cpp region.h \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o region.o region.cpp
 
 sobel.o: sobel.cpp sobel.h \
 		linearfilter.h \
@@ -1335,6 +1380,12 @@ moc_linearfilter.o: moc_linearfilter.cpp
 
 moc_mat.o: moc_mat.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mat.o moc_mat.cpp
+
+moc_matchtemplate.o: moc_matchtemplate.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_matchtemplate.o moc_matchtemplate.cpp
+
+moc_region.o: moc_region.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_region.o moc_region.cpp
 
 moc_sobel.o: moc_sobel.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_sobel.o moc_sobel.cpp

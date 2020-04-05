@@ -29,6 +29,8 @@ SOURCES += \
         linearfilter.cpp \
         main.cpp \
         mat.cpp \
+        matchtemplate.cpp \
+        region.cpp \
         sobel.cpp
 
 RESOURCES += qml.qrc
@@ -52,6 +54,8 @@ HEADERS += \
     guassianblur.h \
     linearfilter.h \
     mat.h \
+    matchtemplate.h \
+    region.h \
     sobel.h
 
 DISTFILES += \

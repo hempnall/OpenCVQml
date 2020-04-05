@@ -11,6 +11,9 @@ void Mat::paint(QPainter *painter)
 {
     QRectF rect = boundingRect();
     painter->drawImage(rect, image());
+    for (Region* r : regions_) {
+        painter->drawRect(r->region());
+    }
 }
 
 LinearFilter *Mat::filter() const
@@ -112,4 +115,18 @@ cv::Mat Mat::matrix() const
         const_cast<unsigned char*>(image_.bits()),
         image_.bytesPerLine()
     );
+}
+
+QQmlListProperty<Region> Mat::regions()
+{
+    return QQmlListProperty<Region>(this, nullptr, &Mat::append_region, nullptr, nullptr, nullptr);
+}
+
+void Mat::append_region(QQmlListProperty<Region> *list, Region *reg)
+{
+    Mat *mat = qobject_cast<Mat *>(list->object);
+    if (mat) {
+        reg->setParentItem(mat);
+        mat->regions_.append(reg);
+    }
 }

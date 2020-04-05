@@ -9,6 +9,7 @@
 #include "opencv2/imgproc/types_c.h"
 #include <opencv2/core/cvstd.hpp>
 #include "linearfilter.h"
+#include "region.h"
 
 class Mat :
     public QQuickPaintedItem
@@ -17,6 +18,7 @@ class Mat :
     Q_PROPERTY(QString filename READ filename WRITE setFilename NOTIFY filenameChanged)
     Q_PROPERTY(QImage image READ image WRITE setImage  NOTIFY imageChanged)
     Q_PROPERTY(LinearFilter* filter WRITE setFilter READ filter NOTIFY filterChanged)
+    Q_PROPERTY(QQmlListProperty<Region> regions READ regions)
 
 
     QImage image_;
@@ -42,6 +44,8 @@ public:
     void setImage(const QImage &image);
     void setImage(const cv::Mat &mat);
 
+    QQmlListProperty<Region> regions();
+
 public slots:
     void invalidateImage();
 
@@ -51,6 +55,9 @@ signals:
     void filterChanged();
     void filenameChanged();
 
+private:
+    QList<Region *> regions_;
+    static void append_region(QQmlListProperty<Region> *list, Region *reg);
 };
 
 #endif // MAT_H

@@ -40,6 +40,14 @@ Window {
             Layout.fillHeight: true
             Layout.fillWidth: true
             filename: "/Users/jameshook/data/lena.jpg"
+            regions: [
+                Region {
+                    region: Qt.rect(10,20,200,250);
+                },
+                Region {
+                    region: Qt.rect(67,44,34,222);
+                }
+            ]
         }
         Mat {
             id: lin
