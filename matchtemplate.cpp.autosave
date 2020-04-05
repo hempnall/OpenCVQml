@@ -63,7 +63,15 @@ void MatchTemplate::matchScale()
         }
         cv::Mat result;
         cv::matchTemplate(resized,grayEdgeTemplate,result,cv::TM_CCOEFF);
-
+        normalize( result, result, 0, 1, cv::NORM_MINMAX, -1, cv::Mat() );
+      
+        /// Localizing the best match with minMaxLoc
+        double minVal; double maxVal; 
+        cv::Point minLoc;
+        cv::Point maxLoc;
+        cv::Point matchLoc;
+      
+        minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, Mat() );
     }
     cv::Mat result
     cv::resize(outImg, outImg, cv::Size(inImg.cols * 0.75,inImg.rows * 0.75), 0, 0, CV_INTER_LINEAR);

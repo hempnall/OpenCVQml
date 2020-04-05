@@ -39,3 +39,17 @@ QImage qimageFromMat(const cv::Mat &mat)
     }
     return img;
 }
+
+cv::Mat grayScaleMatFromQimage(const QImage& im)
+{
+    cv::Mat outRGB;
+    cv::Mat out(
+        im.height(),
+        im.width(),
+        CV_8UC3,
+        const_cast<unsigned char*>(im.bits()),
+        im.bytesPerLine()
+    );
+    cv::cvtColor(out,outRGB,CV_RGB2GRAY);
+    return outRGB;
+}

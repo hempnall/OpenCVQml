@@ -22,10 +22,16 @@ public:
     QImage matchTemplate() const;
     void setMatchTemplate(const QImage &matchTemplate);
 
+    double threshold1() const;
+    void setThreshold1(double threshold1);
+    
+    double threshold2() const;
+    void setThreshold2(double threshold2);
+    
 signals:
     void imageChanged();
     void matchTemplateChanged();
-
+    
 
 public slots:
     void match();
