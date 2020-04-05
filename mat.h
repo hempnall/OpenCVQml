@@ -58,6 +58,7 @@ signals:
 private:
     QList<Region *> regions_;
     static void append_region(QQmlListProperty<Region> *list, Region *reg);
+    QRectF scaledRectangle(const QRect& rect,const QRectF& boundRect);
 };
 
 #endif // MAT_H

@@ -12,7 +12,11 @@ void Mat::paint(QPainter *painter)
     QRectF rect = boundingRect();
     painter->drawImage(rect, image());
     for (Region* r : regions_) {
-        painter->drawRect(r->region());
+        painter->drawRect(
+            scaledRectangle(
+                r->region() ,
+                rect
+        ));
     }
 }
 
@@ -129,4 +133,17 @@ void Mat::append_region(QQmlListProperty<Region> *list, Region *reg)
         reg->setParentItem(mat);
         mat->regions_.append(reg);
     }
+}
+
+QRectF Mat::scaledRectangle(const QRect &rect, const QRectF &boundRect)
+{
+    float widthScale = boundRect.width() / image_.width();
+    float heightScale = boundRect.height() / image_.height();
+    QRectF ret(
+        rect.x() * widthScale ,
+        rect.y() * heightScale,
+        rect.width() * widthScale,
+        rect.height() * heightScale
+    );
+    return ret;
 }
