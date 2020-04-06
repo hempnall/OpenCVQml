@@ -4,17 +4,21 @@
 #include <QQuickItem>
 #include <QImage>
 #include "opencv2/imgproc/imgproc.hpp"
+#include "region.h"
 
 class MatchTemplate : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QImage image READ image WRITE setImage  NOTIFY imageChanged)
     Q_PROPERTY(QImage matchTemplate READ matchTemplate WRITE setMatchTemplate  NOTIFY matchTemplateChanged)
+    Q_PROPERTY(QImage gsimage READ gsimage  NOTIFY gsimageChanged)
+    Q_PROPERTY(QImage gsmatchTemplate READ gsmatchTemplate  NOTIFY gsmatchTemplateChanged)
     Q_PROPERTY(double threshold1 WRITE setThreshold1 READ threshold1  NOTIFY threshold1Changed)
     Q_PROPERTY(double threshold2 WRITE setThreshold2 READ threshold2  NOTIFY threshold2Changed)
+    Q_PROPERTY(QQmlListProperty<Region> regions READ regions NOTIFY regionsChanged)
 
 public:
-    MatchTemplate();
+    MatchTemplate(QObject* parent = nullptr);
 
     QImage image() const;
     void setImage(const QImage &image);
@@ -22,10 +26,24 @@ public:
     QImage matchTemplate() const;
     void setMatchTemplate(const QImage &matchTemplate);
 
+    QImage gsimage() const;
+    QImage gsmatchTemplate() const;
+
+    double threshold1() const;
+    void setThreshold1(double threshold1);
+
+    double threshold2() const;
+    void setThreshold2(double threshold2);
+    QQmlListProperty<Region> regions();
+
 signals:
     void imageChanged();
     void matchTemplateChanged();
-
+    void gsimageChanged();
+    void gsmatchTemplateChanged();
+    void threshold1Changed();
+    void threshold2Changed();
+    void regionsChanged();
 
 public slots:
     void match();
@@ -34,9 +52,13 @@ public slots:
 private:
     QImage image_;
     QImage matchTemplate_;
+    cv::Mat gsimage_;
+    cv::Mat gsmatchTemplate_;
     double threshold1_;
     double threshold2_;
-
+    QList<Region *> regions_;
+    static void append_region(QQmlListProperty<Region> *list, Region *reg);
+    void getCannyImage(const cv::Mat& in,cv::Mat& out);
     void performTemplateMatch(
         const cv::Mat& image,
         const cv::Mat& tmplt

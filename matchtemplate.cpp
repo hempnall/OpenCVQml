@@ -1,8 +1,9 @@
 #include "matchtemplate.h"
 #include "ImageUtilities.h"
+#include <QDebug>
 
-MatchTemplate::MatchTemplate()
-    : threshold1_(50),threshold2_(200)
+MatchTemplate::MatchTemplate(QObject* parent)
+    :    threshold1_(50),threshold2_(200)
 {
 
 }
@@ -27,6 +28,26 @@ void MatchTemplate::setMatchTemplate(const QImage &matchTemplate)
     matchTemplate_ = matchTemplate;
 }
 
+QImage MatchTemplate::gsimage() const
+{
+    qDebug() << "1";
+    if (gsimage_.empty()) return QImage();
+        qDebug() << "2";
+    cv::Mat out;
+    cv::cvtColor(gsimage_,out,cv::COLOR_GRAY2BGR);
+    return qimageFromMat(out);
+}
+
+QImage MatchTemplate::gsmatchTemplate() const
+{
+        qDebug() << "3";
+    if (gsmatchTemplate_.empty()) return QImage();
+        qDebug() << "4";
+    cv::Mat out;
+    cv::cvtColor(gsmatchTemplate_,out,cv::COLOR_GRAY2BGR);
+    return qimageFromMat(out);
+}
+
 
 void MatchTemplate::match()
 {
@@ -34,40 +55,67 @@ void MatchTemplate::match()
 
 void MatchTemplate::matchScale()
 {
-    cv::Mat grayImage = grayScaleMatFromQimage(image_);
     cv::Mat grayEdgeImage;
-    cv::Canny(
-        grayImage,
-        grayEdgeImage,
-        threshold1_,
-        threshold2_
-    );
+    cv::Mat grayEdgeTemplate;
+    getCannyImage(grayScaleMatFromQimage(image_),grayEdgeImage);
+    getCannyImage(grayScaleMatFromQimage(matchTemplate_),grayEdgeTemplate);
+
+    gsimage_ = grayEdgeImage;
+    gsmatchTemplate_ = grayEdgeTemplate;
+    emit gsimageChanged();
+    emit gsmatchTemplateChanged();
 
     int templateWidth = matchTemplate_.width();
     int templateHeight = matchTemplate_.height();
-    cv::Mat grayTemplate = grayScaleMatFromQimage(image_);
-    cv::Mat grayEdgeTemplate;
+
+//    cv::Mat resized;
+//    float scale = 1.0f;
+//    cv::resize(
+//        grayEdgeImage,
+//        resized,
+//        cv::Size(
+//            grayEdgeImage.cols * scale,
+//            grayEdgeImage.rows * scale
+//        )
+//    );
+
+    cv::Mat result;
+    /// Create the result matrix
+    int result_cols =  grayEdgeImage.cols - grayEdgeTemplate.cols + 1;
+    int result_rows = grayEdgeImage.rows - grayEdgeTemplate.rows + 1;
+    result.create( result_rows, result_cols, CV_32FC1 );
+
+    int match_method = cv::TM_CCOEFF;
+    cv::matchTemplate(grayEdgeImage,grayEdgeTemplate,result,cv::TM_CCOEFF);
+    normalize( result, result, 0, 1, cv::NORM_MINMAX, -1, cv::Mat() );
+
+    /// Localizing the best match with minMaxLoc
+    double minVal; double maxVal;
+    cv::Point minLoc;
+    cv::Point maxLoc;
+    cv::Point matchLoc;
+
+    minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat() );
+    if( match_method  == cv::TM_SQDIFF || match_method == cv::TM_SQDIFF_NORMED )
+      { matchLoc = minLoc; }
+    else
+      { matchLoc = maxLoc; }
+
+   // Region r;
+    qDebug() << QRect( qpointFromCVPoint(matchLoc) , QSize( templateWidth,templateHeight) ) ;
+ //   regions_.push_back( &r );
+   // emit regionsChanged();
+
+}
+
+void MatchTemplate::getCannyImage(const cv::Mat &in,cv::Mat &out)
+{
     cv::Canny(
-        grayTemplate,
-        grayEdgeTemplate ,
+        in,
+        out,
         threshold1_,
         threshold2_
     );
-
-    for (int i=0;i<20;++i) {
-        float scale = 0.2 + (1.0 - 0.2) * ( i / 20  );
-        cv::Mat resized
-        cv::resize(grayEdgeImage,resized,grayEdgeImage.cols * scale);
-        if ( resized.cols < templateWidth || resized.rows < templateHeight) {
-            break;
-        }
-        cv::Mat result;
-        cv::matchTemplate(resized,grayEdgeTemplate,result,cv::TM_CCOEFF);
-
-    }
-    cv::Mat result
-    cv::resize(outImg, outImg, cv::Size(inImg.cols * 0.75,inImg.rows * 0.75), 0, 0, CV_INTER_LINEAR);
-
 }
 
 double MatchTemplate::threshold2() const
@@ -91,9 +139,25 @@ void MatchTemplate::setThreshold1(double threshold1)
 }
 
 void MatchTemplate::performTemplateMatch(
-const cv::Mat &image,
-const cv::Mat &tmplt
+    const cv::Mat &image,
+    const cv::Mat &tmplt
 )
-    {
+{
 
+}
+
+
+
+QQmlListProperty<Region> MatchTemplate::regions()
+{
+    return QQmlListProperty<Region>(this, nullptr, &MatchTemplate::append_region, nullptr, nullptr, nullptr);
+}
+
+void MatchTemplate::append_region(QQmlListProperty<Region> *list, Region *reg)
+{
+    MatchTemplate *mat = qobject_cast<MatchTemplate *>(list->object);
+    if (mat) {
+        reg->setParentItem(mat);
+        mat->regions_.append(reg);
+    }
 }

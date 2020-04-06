@@ -11,6 +11,7 @@ void Region::paint(
     const QImage &im,
     const QRectF &boundRect)
 {
+    painter->setBrush(Qt::red);
     painter->drawRect(
         scaledRectangle(
             im,

@@ -53,3 +53,13 @@ cv::Mat grayScaleMatFromQimage(const QImage& im)
     cv::cvtColor(out,outRGB,CV_RGB2GRAY);
     return outRGB;
 }
+
+QSize qsizeFromCVSize(const cv::Size &sz)
+{
+    return QSize(sz.width,sz.height);
+}
+
+QPoint qpointFromCVPoint(const cv::Point &pt)
+{
+    return QPoint( pt.x , pt.y);
+}

@@ -929,6 +929,36 @@ moc_matchtemplate.cpp: matchtemplate.h \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
 		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
 		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		/usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv4/opencv2/imgproc.hpp \
+		/usr/local/include/opencv4/opencv2/core.hpp \
+		/usr/local/include/opencv4/opencv2/core/cvdef.h \
+		/usr/local/include/opencv4/opencv2/core/hal/interface.h \
+		/usr/local/include/opencv4/opencv2/core/cv_cpu_dispatch.h \
+		/usr/local/include/opencv4/opencv2/core/cv_cpu_helper.h \
+		/usr/local/include/opencv4/opencv2/core/fast_math.hpp \
+		/usr/local/include/opencv4/opencv2/core/version.hpp \
+		/usr/local/include/opencv4/opencv2/core/base.hpp \
+		/usr/local/include/opencv4/opencv2/opencv_modules.hpp \
+		/usr/local/include/opencv4/opencv2/core/cvstd.hpp \
+		/usr/local/include/opencv4/opencv2/core/cvstd_wrapper.hpp \
+		/usr/local/include/opencv4/opencv2/core/neon_utils.hpp \
+		/usr/local/include/opencv4/opencv2/core/vsx_utils.hpp \
+		/usr/local/include/opencv4/opencv2/core/check.hpp \
+		/usr/local/include/opencv4/opencv2/core/traits.hpp \
+		/usr/local/include/opencv4/opencv2/core/matx.hpp \
+		/usr/local/include/opencv4/opencv2/core/saturate.hpp \
+		/usr/local/include/opencv4/opencv2/core/types.hpp \
+		/usr/local/include/opencv4/opencv2/core/mat.hpp \
+		/usr/local/include/opencv4/opencv2/core/bufferpool.hpp \
+		/usr/local/include/opencv4/opencv2/core/mat.inl.hpp \
+		/usr/local/include/opencv4/opencv2/core/persistence.hpp \
+		/usr/local/include/opencv4/opencv2/core/operations.hpp \
+		/usr/local/include/opencv4/opencv2/core/cvstd.inl.hpp \
+		/usr/local/include/opencv4/opencv2/core/utility.hpp \
+		/usr/local/include/opencv4/opencv2/core/optim.hpp \
+		/usr/local/include/opencv4/opencv2/core/ovx.hpp \
+		region.h \
 		moc_predefs.h \
 		../../Qt/5.12.3/clang_64/bin/moc
 	/Users/jameshook/Qt/5.12.3/clang_64/bin/moc $(DEFINES) --include /Users/jameshook/opencv/OpenCVQml/moc_predefs.h -I/Users/jameshook/Qt/5.12.3/clang_64/mkspecs/macx-clang -I/Users/jameshook/opencv/OpenCVQml -I/usr/local/include/opencv4 -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtGui.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQml.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtNetwork.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtCore.framework/Headers -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/jameshook/Qt/5.12.3/clang_64/lib matchtemplate.h -o moc_matchtemplate.cpp
@@ -936,6 +966,8 @@ moc_matchtemplate.cpp: matchtemplate.h \
 moc_region.cpp: region.h \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h \
 		moc_predefs.h \
 		../../Qt/5.12.3/clang_64/bin/moc
 	/Users/jameshook/Qt/5.12.3/clang_64/bin/moc $(DEFINES) --include /Users/jameshook/opencv/OpenCVQml/moc_predefs.h -I/Users/jameshook/Qt/5.12.3/clang_64/mkspecs/macx-clang -I/Users/jameshook/opencv/OpenCVQml -I/usr/local/include/opencv4 -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtGui.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtQml.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtNetwork.framework/Headers -I/Users/jameshook/Qt/5.12.3/clang_64/lib/QtCore.framework/Headers -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/jameshook/Qt/5.12.3/clang_64/lib region.h -o moc_region.cpp
@@ -1314,12 +1346,47 @@ matchtemplate.o: matchtemplate.cpp matchtemplate.h \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
 		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
-		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		/usr/local/include/opencv4/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv4/opencv2/imgproc.hpp \
+		/usr/local/include/opencv4/opencv2/core.hpp \
+		/usr/local/include/opencv4/opencv2/core/cvdef.h \
+		/usr/local/include/opencv4/opencv2/core/hal/interface.h \
+		/usr/local/include/opencv4/opencv2/core/cv_cpu_dispatch.h \
+		/usr/local/include/opencv4/opencv2/core/cv_cpu_helper.h \
+		/usr/local/include/opencv4/opencv2/core/fast_math.hpp \
+		/usr/local/include/opencv4/opencv2/core/version.hpp \
+		/usr/local/include/opencv4/opencv2/core/base.hpp \
+		/usr/local/include/opencv4/opencv2/opencv_modules.hpp \
+		/usr/local/include/opencv4/opencv2/core/cvstd.hpp \
+		/usr/local/include/opencv4/opencv2/core/cvstd_wrapper.hpp \
+		/usr/local/include/opencv4/opencv2/core/neon_utils.hpp \
+		/usr/local/include/opencv4/opencv2/core/vsx_utils.hpp \
+		/usr/local/include/opencv4/opencv2/core/check.hpp \
+		/usr/local/include/opencv4/opencv2/core/traits.hpp \
+		/usr/local/include/opencv4/opencv2/core/matx.hpp \
+		/usr/local/include/opencv4/opencv2/core/saturate.hpp \
+		/usr/local/include/opencv4/opencv2/core/types.hpp \
+		/usr/local/include/opencv4/opencv2/core/mat.hpp \
+		/usr/local/include/opencv4/opencv2/core/bufferpool.hpp \
+		/usr/local/include/opencv4/opencv2/core/mat.inl.hpp \
+		/usr/local/include/opencv4/opencv2/core/persistence.hpp \
+		/usr/local/include/opencv4/opencv2/core/operations.hpp \
+		/usr/local/include/opencv4/opencv2/core/cvstd.inl.hpp \
+		/usr/local/include/opencv4/opencv2/core/utility.hpp \
+		/usr/local/include/opencv4/opencv2/core/optim.hpp \
+		/usr/local/include/opencv4/opencv2/core/ovx.hpp \
+		region.h \
+		ImageUtilities.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o matchtemplate.o matchtemplate.cpp
 
 region.o: region.cpp region.h \
 		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/QQuickItem \
-		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h
+		../../Qt/5.12.3/clang_64/lib/QtQuick.framework/Headers/qquickitem.h \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../Qt/5.12.3/clang_64/lib/QtGui.framework/Headers/qpainter.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o region.o region.cpp
 
 sobel.o: sobel.cpp sobel.h \

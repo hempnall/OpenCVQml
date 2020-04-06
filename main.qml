@@ -19,6 +19,12 @@ Window {
                     im1.filename = "/Users/jameshook/data/cakes.jpg";
                 }
             }
+            Button {
+                text: "Match"
+                onClicked: {
+                    match.matchScale();
+                }
+            }
             Slider {
                 id: slider1
                 from: 1
@@ -39,47 +45,35 @@ Window {
             id: im1
             Layout.fillHeight: true
             Layout.fillWidth: true
-            filename: "/Users/jameshook/data/lena.jpg"
-            regions: [
-                Region {
-                    region: Qt.rect(10,20,256,256);
-                }
-            ]
+            filename: "/Users/jameshook/Desktop/imageHaystack1.png"
+            regions: [ Region { region: Qt.rect(192,152, 182,56) }]
         }
         Mat {
-            id: lin
-            image: im1.image
+            id: im2
             Layout.fillHeight: true
             Layout.fillWidth: true
-//            filter: GuassianBlur {
-//                id: gb
-//                width: slider1.value
-//                height: slider2.value
-//            }
+            filename: "/Users/jameshook/Desktop/imageNeedle.png"
         }
         Mat {
-            id: lin3
-            image: lin.image
+            id: nm1
             Layout.fillHeight: true
             Layout.fillWidth: true
-            filter: Convert {}
+            image: match.gsimage
         }
         Mat {
-            id: lin2
-            image: lin3.image
+            id: nm2
             Layout.fillHeight: true
             Layout.fillWidth: true
-            filter: Canny {
-                threshold1: slider1.value
-                threshold2: slider2.value
-            }
+            image: match.gsmatchTemplate
         }
 
     }
 
-
-
-
+    MatchTemplate {
+        id: match
+        image: im1.image
+        matchTemplate: im2.image
+    }
 }
 
 

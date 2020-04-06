@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<Convert>("OpenCV", 1, 0, "Convert");
     qmlRegisterType<Canny>("OpenCV", 1, 0, "Canny");
     qmlRegisterType<Region>("OpenCV", 1, 0, "Region");
+    qmlRegisterType<MatchTemplate>("OpenCV", 1, 0, "MatchTemplate");
     engine.load(url);
 
     return app.exec();
