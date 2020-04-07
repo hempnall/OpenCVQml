@@ -19,6 +19,7 @@ class Mat :
     Q_PROPERTY(QImage image READ image WRITE setImage  NOTIFY imageChanged)
     Q_PROPERTY(LinearFilter* filter WRITE setFilter READ filter NOTIFY filterChanged)
     Q_PROPERTY(QQmlListProperty<Region> regions READ regions)
+    Q_PROPERTY(Region* region WRITE setRegion READ region NOTIFY regionChanged)
 
 
     QImage image_;
@@ -46,6 +47,9 @@ public:
 
     QQmlListProperty<Region> regions();
 
+    Region *region() const;
+    void setRegion(Region *region);
+
 public slots:
     void invalidateImage();
 
@@ -54,8 +58,10 @@ signals:
     void imageChanged();
     void filterChanged();
     void filenameChanged();
+    void regionChanged();
 
 private:
+    Region* region_;
     QList<Region *> regions_;
     static void append_region(QQmlListProperty<Region> *list, Region *reg);
 

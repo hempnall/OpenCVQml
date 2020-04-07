@@ -37,16 +37,17 @@ Window {
                 to: 200
                 value: 1
             }
-            Text {
-                text: gb.transformCount;
-            }
+//            Text {
+//                text: gb.transformCount;
+//            }
         }
         Mat {
             id: im1
             Layout.fillHeight: true
             Layout.fillWidth: true
             filename: "/Users/jameshook/Desktop/imageHaystack1.png"
-            regions: [ Region { region: Qt.rect(192,152, 182,56) }]
+           // regions: [ Region { region: Qt.rect(192,152, 182,56) }]
+            region: match.region
         }
         Mat {
             id: im2

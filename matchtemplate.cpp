@@ -3,7 +3,7 @@
 #include <QDebug>
 
 MatchTemplate::MatchTemplate(QObject* parent)
-    :    threshold1_(50),threshold2_(200)
+    :    threshold1_(50),threshold2_(200), region_(nullptr)
 {
 
 }
@@ -30,9 +30,7 @@ void MatchTemplate::setMatchTemplate(const QImage &matchTemplate)
 
 QImage MatchTemplate::gsimage() const
 {
-    qDebug() << "1";
     if (gsimage_.empty()) return QImage();
-        qDebug() << "2";
     cv::Mat out;
     cv::cvtColor(gsimage_,out,cv::COLOR_GRAY2BGR);
     return qimageFromMat(out);
@@ -40,9 +38,7 @@ QImage MatchTemplate::gsimage() const
 
 QImage MatchTemplate::gsmatchTemplate() const
 {
-        qDebug() << "3";
     if (gsmatchTemplate_.empty()) return QImage();
-        qDebug() << "4";
     cv::Mat out;
     cv::cvtColor(gsmatchTemplate_,out,cv::COLOR_GRAY2BGR);
     return qimageFromMat(out);
@@ -101,10 +97,9 @@ void MatchTemplate::matchScale()
     else
       { matchLoc = maxLoc; }
 
-   // Region r;
-    qDebug() << QRect( qpointFromCVPoint(matchLoc) , QSize( templateWidth,templateHeight) ) ;
- //   regions_.push_back( &r );
-   // emit regionsChanged();
+    region_ = new Region;
+    region_->setRegion( QRect( qpointFromCVPoint(matchLoc),QSize(templateWidth,templateHeight) ) );
+    emit regionChanged();
 
 }
 
@@ -128,6 +123,11 @@ void MatchTemplate::setThreshold2(double threshold2)
     threshold2_ = threshold2;
 }
 
+Region *MatchTemplate::region()
+{
+    return region_;
+}
+
 double MatchTemplate::threshold1() const
 {
     return threshold1_;
@@ -148,16 +148,4 @@ void MatchTemplate::performTemplateMatch(
 
 
 
-QQmlListProperty<Region> MatchTemplate::regions()
-{
-    return QQmlListProperty<Region>(this, nullptr, &MatchTemplate::append_region, nullptr, nullptr, nullptr);
-}
 
-void MatchTemplate::append_region(QQmlListProperty<Region> *list, Region *reg)
-{
-    MatchTemplate *mat = qobject_cast<MatchTemplate *>(list->object);
-    if (mat) {
-        reg->setParentItem(mat);
-        mat->regions_.append(reg);
-    }
-}

@@ -2,7 +2,7 @@
 #include <QDebug>
 
 Mat::Mat()
-    : filter_(nullptr), cacheValid_(false)
+    : filter_(nullptr), cacheValid_(false),region_(nullptr)
 {
 
 }
@@ -11,6 +11,9 @@ void Mat::paint(QPainter *painter)
 {
     QRectF rect = boundingRect();
     painter->drawImage(rect, image());
+    if (region_) {
+        region_->paint(painter,image_,rect);
+    }
     for (Region* r : regions_) {
         r->paint(painter,image_,rect);
     }
@@ -106,12 +109,23 @@ void Mat::invalidateImage()
     emit imageChanged();
 }
 
+Region *Mat::region() const
+{
+    return region_;
+}
+
+void Mat::setRegion(Region *region)
+{
+    region_ = region;
+    update();
+}
+
 cv::Mat Mat::matrix() const
 {
     return cv::Mat(
-        image_.height(),
-        image_.width(),
-        CV_8UC3,
+                image_.height(),
+                image_.width(),
+                CV_8UC3,
         const_cast<unsigned char*>(image_.bits()),
         image_.bytesPerLine()
     );

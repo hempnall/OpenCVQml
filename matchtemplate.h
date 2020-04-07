@@ -15,7 +15,7 @@ class MatchTemplate : public QQuickItem
     Q_PROPERTY(QImage gsmatchTemplate READ gsmatchTemplate  NOTIFY gsmatchTemplateChanged)
     Q_PROPERTY(double threshold1 WRITE setThreshold1 READ threshold1  NOTIFY threshold1Changed)
     Q_PROPERTY(double threshold2 WRITE setThreshold2 READ threshold2  NOTIFY threshold2Changed)
-    Q_PROPERTY(QQmlListProperty<Region> regions READ regions NOTIFY regionsChanged)
+    Q_PROPERTY(Region* region READ region NOTIFY regionChanged)
 
 public:
     MatchTemplate(QObject* parent = nullptr);
@@ -34,7 +34,7 @@ public:
 
     double threshold2() const;
     void setThreshold2(double threshold2);
-    QQmlListProperty<Region> regions();
+    Region* region();
 
 signals:
     void imageChanged();
@@ -43,7 +43,7 @@ signals:
     void gsmatchTemplateChanged();
     void threshold1Changed();
     void threshold2Changed();
-    void regionsChanged();
+    void regionChanged();
 
 public slots:
     void match();
@@ -56,8 +56,7 @@ private:
     cv::Mat gsmatchTemplate_;
     double threshold1_;
     double threshold2_;
-    QList<Region *> regions_;
-    static void append_region(QQmlListProperty<Region> *list, Region *reg);
+    Region * region_;
     void getCannyImage(const cv::Mat& in,cv::Mat& out);
     void performTemplateMatch(
         const cv::Mat& image,
