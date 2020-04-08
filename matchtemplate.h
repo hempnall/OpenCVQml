@@ -62,6 +62,10 @@ private:
         const cv::Mat& image,
         const cv::Mat& tmplt
     );
+    double matchInternal(
+        const  cv::Mat&  gsImage,
+        const cv::Mat& gsTemplate,
+        cv::Point& matchLoc);
 };
 
 

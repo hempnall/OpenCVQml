@@ -37,9 +37,6 @@ Window {
                 to: 200
                 value: 1
             }
-//            Text {
-//                text: gb.transformCount;
-//            }
         }
         Mat {
             id: im1

@@ -53,6 +53,7 @@ void MatchTemplate::matchScale()
 {
     cv::Mat grayEdgeImage;
     cv::Mat grayEdgeTemplate;
+
     getCannyImage(grayScaleMatFromQimage(image_),grayEdgeImage);
     getCannyImage(grayScaleMatFromQimage(matchTemplate_),grayEdgeTemplate);
 
@@ -61,41 +62,27 @@ void MatchTemplate::matchScale()
     emit gsimageChanged();
     emit gsmatchTemplateChanged();
 
-    int templateWidth = matchTemplate_.width();
-    int templateHeight = matchTemplate_.height();
-
-//    cv::Mat resized;
-//    float scale = 1.0f;
-//    cv::resize(
-//        grayEdgeImage,
-//        resized,
-//        cv::Size(
-//            grayEdgeImage.cols * scale,
-//            grayEdgeImage.rows * scale
-//        )
-//    );
-
-    cv::Mat result;
-    /// Create the result matrix
-    int result_cols =  grayEdgeImage.cols - grayEdgeTemplate.cols + 1;
-    int result_rows = grayEdgeImage.rows - grayEdgeTemplate.rows + 1;
-    result.create( result_rows, result_cols, CV_32FC1 );
-
-    int match_method = cv::TM_CCOEFF;
-    cv::matchTemplate(grayEdgeImage,grayEdgeTemplate,result,cv::TM_CCOEFF);
-    normalize( result, result, 0, 1, cv::NORM_MINMAX, -1, cv::Mat() );
-
-    /// Localizing the best match with minMaxLoc
-    double minVal; double maxVal;
-    cv::Point minLoc;
-    cv::Point maxLoc;
+    double max = -10.0;
+    double maxScale = 0.0;
     cv::Point matchLoc;
+    cv::Point maxPoint;
+    for (int i=0;i<10; ++i) {
 
-    minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat() );
-    if( match_method  == cv::TM_SQDIFF || match_method == cv::TM_SQDIFF_NORMED )
-      { matchLoc = minLoc; }
-    else
-      { matchLoc = maxLoc; }
+        double scale = 0.2 + ( ( 1.2 - 0.2 ) / 10 ) * i;
+        cv::Size newSize(
+            grayEdgeImage.cols * scale ,
+            grayEdgeImage.rows * scale
+        );
+        cv::Mat scaledImage(newSize,grayEdgeImage.type());
+        cv::resize(grayEdgeImage,scaledImage,newSize);
+        double scaleMax = matchInternal(scaledImage,grayEdgeTemplate,matchLoc);
+
+        if (scaleMax > max) {
+            max = scaleMax;
+            maxScale = scale;
+            maxPoint = matchLoc;
+        }
+    }
 
     region_ = new Region;
     region_->setRegion( QRect( qpointFromCVPoint(matchLoc),QSize(templateWidth,templateHeight) ) );
@@ -144,6 +131,41 @@ void MatchTemplate::performTemplateMatch(
 )
 {
 
+}
+
+double MatchTemplate::matchInternal(
+    const cv::Mat &gsImage,
+    const cv::Mat &gsTemplate,
+    cv::Point& matchLoc
+)
+{
+
+    cv::Mat result;
+    int result_cols =  gsImage.cols - gsTemplate.cols + 1;
+    int result_rows = gsImage.rows - gsTemplate.rows + 1;
+
+    if (result_cols < 0 || result_rows < 0 ) {
+        return 0.0;
+    }
+
+    result.create( result_rows, result_cols, CV_32FC1 );
+
+    int match_method = cv::TM_CCOEFF;
+    cv::matchTemplate(gsImage,gsTemplate,result,cv::TM_CCOEFF);
+  //  cv::normalize( result, result, 0, 1, cv::NORM_MINMAX, -1, cv::Mat() );
+
+    /// Localizing the best match with minMaxLoc
+    double minVal; double maxVal;
+    cv::Point minLoc;
+    cv::Point maxLoc;
+
+    cv::minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat() );
+    if( match_method  == cv::TM_SQDIFF || match_method == cv::TM_SQDIFF_NORMED )
+      { matchLoc = minLoc; }
+    else
+      { matchLoc = maxLoc; }
+
+    return maxVal;
 }
 
 
