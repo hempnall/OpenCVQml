@@ -7,8 +7,8 @@
 cv::Mat matFromQimage(const QImage& im);
 QImage qimageFromMat( const cv::Mat& m);
 cv::Mat grayScaleMatFromQimage(const QImage& im);
-QSize qsizeFromCVSize( const cv::Size& sz );
-QPoint qpointFromCVPoint( const cv::Point& pt);
+QSize qsizeFromCVSize( const cv::Size& sz , double scale = 1.0);
+QPoint qpointFromCVPoint( const cv::Point& pt, double scale = 1.0);
 
 
 #endif // IMAGEUTILITIES_H

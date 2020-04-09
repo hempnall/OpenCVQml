@@ -84,8 +84,12 @@ void MatchTemplate::matchScale()
         }
     }
 
+    qDebug() << "maxscale=" << maxScale;
     region_ = new Region;
-    region_->setRegion( QRect( qpointFromCVPoint(matchLoc),QSize(templateWidth,templateHeight) ) );
+    region_->setRegion(
+        QRect( qpointFromCVPoint(maxPoint , 1/maxScale),
+        QSize(grayEdgeTemplate.cols/maxScale,grayEdgeTemplate.rows/maxScale) )
+    );
     emit regionChanged();
 
 }
